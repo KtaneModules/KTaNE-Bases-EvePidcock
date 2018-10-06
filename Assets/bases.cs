@@ -60,7 +60,7 @@ public class bases : MonoBehaviour {
             module.HandlePass();
             _isSolved = true;
             newAudio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.CorrectChime, submit.transform);
-            //Do the ending animation
+            StartCoroutine(EndAnimation());
         } else {
             module.HandleStrike();
             currentInput = "";
@@ -177,5 +177,117 @@ public class bases : MonoBehaviour {
         }
 
         return new string(str, i, str.Length - i);
+    }
+
+    private IEnumerator EndAnimation() {
+        var one = true;
+        var two = true;
+        var ans = true;
+        if (base1 == 10) {
+            one = false;
+        }
+        if (base2 == 10)
+        {
+            two = false;
+        }
+        if (baseAns == 10)
+        {
+            ans = false;
+        }
+
+        var ansMap = currentInput.ToCharArray();
+        var ansMap10 = answer.ToString().ToCharArray();
+
+        var num1Map = num1Text.text.ToCharArray();
+        var num1Map10 = num1.ToString().ToCharArray();
+
+        var num2Map = num2Text.text.ToCharArray();
+        var num2Map10 = num2.ToString().ToCharArray();
+
+        if (ans) {
+            for (int j = currentInput.Length - 1; j >= 0; j--) {
+                if (j < ansMap10.Length) {
+                    ansMap[j] = ansMap10[j];
+                } else {
+                    ansMap[j] = ' ';
+                }
+
+                currentInput = new string(ansMap);
+                UpdateDisplay();
+                yield return new WaitForSeconds(0.2f);
+            }
+
+            currentInput = answer.ToString();
+            UpdateDisplay();
+        }
+
+        if (two)
+        {
+            for (int j = num2Map.Length - 1; j >= 0; j--)
+            {
+                if (j < num2Map10.Length)
+                {
+                    num2Map[j] = num2Map10[j];
+                }
+                else
+                {
+                    num2Map[j] = ' ';
+                }
+
+                string num2temp = new string(num2Map);
+                num2Text.text = num2temp;
+                yield return new WaitForSeconds(0.2f);
+            }
+
+            num2Text.text = num2.ToString();
+        }
+
+        if (one) {
+            for (int j = num1Map.Length - 1; j >= 0; j--) {
+                if (j < num1Map10.Length) {
+                    num1Map[j] = num1Map10[j];
+                } else {
+                    num1Map[j] = ' ';
+                }
+
+                string num1temp = new string(num1Map);
+                num1Text.text = num1temp;
+                yield return new WaitForSeconds(0.2f);
+            }
+
+            num1Text.text = num1.ToString();
+        }
+
+        
+
+    }
+
+#pragma warning disable 414
+    private string TwitchHelpMessage = "Use '!{0} 482' to submit 482 as your answer.";
+#pragma warning restore 414
+
+    protected KMSelectable[] ProcessTwitchCommand(string input)
+    {
+        var buttons = new Dictionary<char, KMSelectable> {
+            {'0', numbers[0]},
+            {'1', numbers[1]},
+            {'2', numbers[2]},
+            {'3', numbers[3]},
+            {'4', numbers[4]},
+            {'5', numbers[5]},
+            {'6', numbers[6]},
+            {'7', numbers[7]},
+            {'8', numbers[8]},
+            {'9', numbers[9]}
+        };
+
+        var split = input.ToLowerInvariant().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+        if (split.Length == 1 && Regex.IsMatch(split[0], @"^[-.0-9]+$"))
+        {
+            return split[1].Select(c => buttons[c]).Concat(new[] { submit }).ToArray();
+        }
+
+        return null;
     }
 }
