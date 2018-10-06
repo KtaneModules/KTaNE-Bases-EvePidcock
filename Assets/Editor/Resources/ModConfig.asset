@@ -13,7 +13,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: bases
   title: Bases
-  description: Do simple math between numbers in different bases!
+  description: "Do simple math between numbers in different bases!\r\n\r\nManual HTML:
+    https://ktane.timwi.de/HTML/Bases.html\r\nManual PDF: https://ktane.timwi.de/PDF/Bases.pdf\r\n\r\nModule
+    by: AAces"
   version: 1.0
   outputFolder: build
   previewImage: {fileID: 2800000, guid: ff59e0664e5a7fc4e817dfa947b1beab, type: 3}
