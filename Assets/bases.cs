@@ -285,7 +285,7 @@ public class bases : MonoBehaviour {
 
         if (split.Length == 1 && Regex.IsMatch(split[0], @"^[0-9]+$"))
         {
-            return split[1].Select(c => buttons[c]).Concat(new[] { submit }).ToArray();
+            return split[0].Select(c => buttons[c]).Concat(new[] { submit }).ToArray();
         }
 
         return null;
