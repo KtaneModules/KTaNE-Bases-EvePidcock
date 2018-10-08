@@ -110,12 +110,12 @@ public class bases : MonoBehaviour {
         }
         if (two != 10)
         {
-            two = one % 7;
+            two = two % 7;
             two += 2;
         }
         if (ansB != 10)
         {
-            ansB = one % 7;
+            ansB = ansB % 7;
             ansB += 2;
         }
 
