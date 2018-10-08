@@ -283,7 +283,7 @@ public class bases : MonoBehaviour {
 
         var split = input.ToLowerInvariant().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-        if (split.Length == 1 && Regex.IsMatch(split[0], @"^[-.0-9]+$"))
+        if (split.Length == 1 && Regex.IsMatch(split[0], @"^[0-9]+$"))
         {
             return split[1].Select(c => buttons[c]).Concat(new[] { submit }).ToArray();
         }
